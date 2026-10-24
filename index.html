@@ -61,18 +61,24 @@ jobTypes.forEach(j=>{ cities.forEach(c=>{ allJobs.push({...j, city:c}); }); });
 let currentFilter = 'All';
 let currentSearch = '';
 
+function normalize(s){ return s.toLowerCase().replace(/e/g,'a').replace(/[^a-z]/g,''); }
+
 function showJobs(){
   let list = allJobs.filter(j=>{
     if(currentFilter==='All') return true;
     return j.type===currentFilter || j.cat===currentFilter;
   });
-  if(currentSearch) list = list.filter(j => (j.title+" "+j.city+" "+j.type+" "+j.cat).toLowerCase().includes(currentSearch));
+  if(currentSearch){
+    let q = normalize(currentSearch);
+    // galat spelling bhi chalegi - pehle 4 letters se match
+    list = list.filter(j => normalize(j.title+" "+j.city+" "+j.type+" "+j.cat).includes(q) || normalize(j.city).substring(0,4) === q.substring(0,4));
+  }
   document.getElementById('count').textContent = list.length;
-  document.getElementById('jobList').innerHTML = list.map((job,i)=>{
+  document.getElementById('jobList').innerHTML = list.length ? list.map((job,i)=>{
     let badge = job.type==="Govt" ? '<span class="badge govt">🏛️ GOVT CONTRACT</span>' : '<span class="badge verified">✓ Verified</span>';
     let urgent = i%3===0 ? '<span class="badge urgent">🔥 URGENT</span>' : '';
     return `<div class="job-card">${badge} ${urgent}<h3>${job.title} - ${job.city}</h3><p>📍 ${job.city}, Assam | ⭐ 4.8 | ⏰ Part Time Only</p><div class="salary">${job.sal} / month</div><p>✅ ${job.desc}</p><button class="apply-btn" onclick="window.open('https://wa.me/916901964052?text=Hi ${job.title} ${job.city} part time')">Apply on WhatsApp</button></div>`;
-  }).join('');
+  }).join('') : "<p style='text-align:center; padding:20px;'>No jobs found - Sahi spelling try karo: Sivasagar</p>";
 }
 function setActive(id){
   document.querySelectorAll('.filters button').forEach(b=>b.classList.remove('active'));
