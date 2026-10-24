@@ -1,1 +1,44 @@
-<a href="refer.html" style="background:#FF6B00; color:white; padding:14px 22px; border-radius:12px; font-weight:bold; text-decoration:none; display:inline-block;">🎁 Refer & Earn ₹200</a>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Refer & Earn - JobMitra Assam</title>
+<style>
+body{font-family:Arial,sans-serif;background:#f5f5f5;margin:0;padding:15px;text-align:center}
+.box{background:white;padding:25px;border-radius:15px;max-width:400px;margin:20px auto;box-shadow:0 2px 10px rgba(0,0,0,0.1)}
+h1{color:#FF6B00}
+input{width:100%;padding:12px;margin:8px 0;border:1px solid #ddd;border-radius:8px;box-sizing:border-box}
+.btn{background:#25D366;color:white;padding:14px;border:none;border-radius:10px;width:100%;font-size:16px;font-weight:bold}
+.link-box{background:#FFF3E0;padding:12px;border-radius:10px;word-break:break-all;margin:15px 0;border:1px dashed #FF6B00}
+</style>
+</head>
+<body>
+<div class="box">
+<h1>🎁 Refer & Earn ₹200</h1>
+<p>Dost ko JobMitra Assam bhejo<br>Uske join karte hi tumhe <b>₹200</b> milega!</p>
+<h3>Step 1: Apna Naam Daalo</h3>
+<input type="text" id="myName" placeholder="Apna naam likho">
+<button onclick="makeLink()" style="background:#FF6B00;color:white;padding:12px;border:none;border-radius:8px;width:100%;font-weight:bold;">Mera Refer Link Banao</button>
+<div id="result" style="display:none;">
+<p>Step 2: Ye link copy karke share karo</p>
+<div class="link-box" id="myLink"></div>
+<button class="btn" onclick="shareWA()">📲 WhatsApp Pe Share Karo</button>
+<p style="font-size:13px;color:gray;margin-top:15px;">* Paisa tabhi milega jab tumhara dost is link se join karega.</p>
+</div>
+</div>
+<script>
+function makeLink(){
+  let name = document.getElementById('myName').value || 'Friend';
+  let link = 'https://gnayanjyoti128-hue.github.io/Jobmitra-/?ref=' + encodeURIComponent(name);
+  document.getElementById('myLink').innerText = link;
+  document.getElementById('result').style.display = 'block';
+}
+function shareWA(){
+  let link = document.getElementById('myLink').innerText;
+  let text = 'JobMitra Assam pe 99 jobs hai, FREE hai! Join karo: ' + link;
+  window.open('https://wa.me/?text=' + encodeURIComponent(text));
+}
+</script>
+</body>
+</html>
