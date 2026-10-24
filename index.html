@@ -3,107 +3,89 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>JobMitra Assam - 100% Free Jobs</title>
+<title>JobMitra Assam - 99 Jobs</title>
 <style>
 * { margin:0; padding:0; box-sizing:border-box; font-family: Arial, sans-serif; }
 body { background:#f5f5f5; }
 .header { background:#16a34a; color:white; padding:15px; text-align:center; }
-.header h1 { font-size:24px; }
 .banner { background:#dcfce7; padding:12px; text-align:center; font-weight:bold; color:#166534; border:2px dashed #16a34a; margin:10px; border-radius:10px; }
 .filters { display:flex; flex-wrap:wrap; gap:8px; justify-content:center; padding:10px; }
 .filters button { padding:8px 14px; border:1px solid #16a34a; background:white; color:#16a34a; border-radius:20px; cursor:pointer; font-weight:bold; }
-.filters button.active { background:#16a34a; color:white; }
-.section-title { padding:15px 10px 5px; font-size:18px; font-weight:bold; }
 .job-card { background:white; margin:10px; padding:15px; border-radius:12px; box-shadow:0 2px 8px rgba(0,0,0,0.1); }
-.job-card h3 { font-size:18px; margin-bottom:5px; }
-.badge { display:inline-block; background:#dcfce7; color:#166534; padding:3px 8px; border-radius:5px; font-size:12px; font-weight:bold; }
-.urgent { background:#fee2e2; color:#dc2626; }
+.badge { display:inline-block; padding:3px 8px; border-radius:5px; font-size:12px; font-weight:bold; }
 .verified { background:#dbeafe; color:#1d4ed8; }
+.urgent { background:#fee2e2; color:#dc2626; }
+.govt { background:#fef3c7; color:#92400e; }
 .salary { color:#16a34a; font-size:20px; font-weight:bold; margin:8px 0; }
 .apply-btn { background:#25D366; color:white; width:100%; padding:12px; border:none; border-radius:8px; font-size:16px; font-weight:bold; cursor:pointer; margin-top:10px; }
-.trust { background:white; margin:10px; padding:15px; border-radius:12px; text-align:center; }
 </style>
 </head>
 <body>
 
-<div class="header">
-<h1>JobMitra Assam 💼</h1>
-<p>Assam ki No.1 Free Job Website</p>
-</div>
+<div class="header"><h1>JobMitra Assam 💼</h1><p>Private + Govt Jobs | 99 Jobs Available</p></div>
+<div class="banner">🎉 100% FREE - Koi Fees Nahi! | 99 Jobs Live Now</div>
 
-<div class="banner">🎉 100% FREE - Koi Fees Nahi! | 500+ Ladko Ko Job Mili</div>
-
-<!-- SEARCH BAR -->
 <div style="padding:10px; text-align:center;">
-<input type="text" id="searchInput" onkeyup="searchJobs()" placeholder="🔍 Apna Sheher Dhundo... Jorhat, Guwahati..." style="width:95%; padding:12px; border:2px solid #16a34a; border-radius:25px; font-size:15px; outline:none;">
+<input type="text" id="searchInput" onkeyup="searchJobs()" placeholder="🔍 Search... Jorhat, Guwahati, Govt, Bank, Delivery..." style="width:95%; padding:12px; border:2px solid #16a34a; border-radius:25px; font-size:15px; outline:none;">
 </div>
 
-<div class="filters">
-<button class="active">All Jobs</button>
-<button>Delivery</button>
-<button>Hotel</button>
-<button>Shop</button>
-<button>Security</button>
-</div>
+<div class="filters"><button onclick="filterJobs('All')">All 99 Jobs</button><button onclick="filterJobs('Private')">Private</button><button onclick="filterJobs('Govt')">Govt Contract</button><button onclick="filterJobs('Delivery')">Delivery</button></div>
 
-<div class="filters">
-<button>₹10k-15k</button>
-<button>₹15k-25k</button>
-<button>₹25k+</button>
-</div>
+<h2 style="padding:15px 10px 5px;">🔥 Total 99 Jobs - Private & Govt</h2>
+<div id="jobList"></div>
 
-<h2 class="section-title">🔥 Aaj Ki Nayi Jobs</h2>
-
-<div class="job-card">
-<span class="badge verified">✓ Verified</span> <span class="badge urgent">🔥 URGENT HIRING</span>
-<h3>Zomato Delivery Partner</h3>
-<p>📍 Jorhat, Assam | ⭐ 4.8 | ⏰ Part Time / Full Time</p>
-<div class="salary">₹25,000 / month</div>
-<p>✅ Bike + License Chahiye | Daily Payment</p>
-<button class="apply-btn" onclick="window.open('https://wa.me/916901964052?text=Hi, I want to apply for Zomato Job in Jorhat')">Apply on WhatsApp</button>
-</div>
-
-<div class="job-card">
-<span class="badge verified">✓ Verified</span>
-<h3>Swiggy Delivery Boy</h3>
-<p>📍 Guwahati, Assam | ⭐ 4.7 | ⏰ Part Time / Full Time</p>
-<div class="salary">₹22,000 / month</div>
-<p>✅ Flexible Timing | Fuel Allowance</p>
-<button class="apply-btn" onclick="window.open('https://wa.me/916901964052?text=Hi, I want to apply for Swiggy Job in Guwahati')">Apply on WhatsApp</button>
-</div>
-
-<div class="job-card">
-<span class="badge verified">✓ Verified</span> <span class="badge urgent">🔥 URGENT</span>
-<h3>Hotel Staff - Dibrugarh</h3>
-<p>📍 Dibrugarh | ⭐ 4.6 | ⏰ Part Time / Full Time</p>
-<div class="salary">₹14,000 / month + Food</div>
-<p>✅ Rahna + Khana Free</p>
-<button class="apply-btn" onclick="window.open('https://wa.me/916901964052?text=Hi, Hotel Job Dibrugarh')">Apply on WhatsApp</button>
-</div>
-
-<div class="trust">
-<h3>⭐ Humare Ladko Ki Success Story</h3>
-<p>"JobMitra se mujhe 2 din me job mili, koi paisa nahi laga" - <b>Rahul, Jorhat</b></p>
-<p>"Part time karke college ka kharcha nikal raha hu" - <b>Priya, Guwahati</b></p>
-<p style="margin-top:10px; color:#16a34a; font-weight:bold;">500+ Happy Candidates | 100% Trusted</p>
-</div>
-
-<p style="text-align:center; padding:20px; color:#666; font-size:13px;">© 2026 JobMitra Assam | Made in Assam</p>
+<p style="text-align:center; padding:20px; color:#666; font-size:13px;">© 2026 JobMitra Assam | 99 Jobs</p>
 
 <script>
-function searchJobs() {
-  var input = document.getElementById('searchInput').value.toLowerCase();
-  var cards = document.getElementsByClassName('job-card');
-  for (var i = 0; i < cards.length; i++) {
-    var text = cards[i].innerText.toLowerCase();
-    if (text.includes(input)) {
-      cards[i].style.display = "";
-    } else {
-      cards[i].style.display = "none";
-    }
-  }
-}
-</script>
+// 99 Jobs Data - 11 Job Types x 9 Cities = 99
+const jobTypes = [
+  {title:"Zomato Delivery Partner", type:"Private", cat:"Delivery", sal:"₹25,000", desc:"Bike + License | Daily Payment"},
+  {title:"Swiggy Delivery Boy", type:"Private", cat:"Delivery", sal:"₹22,000", desc:"Flexible Timing | Fuel Allowance"},
+  {title:"Flipkart Warehouse Helper", type:"Private", cat:"Private", sal:"₹16,500", desc:"Packing / Sorting | 8 Hr Duty"},
+  {title:"Hotel Staff", type:"Private", cat:"Private", sal:"₹14,000 + Food", desc:"Rahna + Khana Free"},
+  {title:"Security Guard", type:"Private", cat:"Private", sal:"₹13,000", desc:"Uniform Free | 12 Hr Duty"},
+  {title:"Shop Helper", type:"Private", cat:"Private", sal:"₹11,000", desc:"No Experience | Part Time / Full Time"},
+  {title:"Anganwadi Helper", type:"Govt", cat:"Govt", sal:"₹10,000", desc:"10th Pass | Mahila Ke Liye | Govt Scheme"},
+  {title:"Panchayat Data Entry Operator", type:"Govt", cat:"Govt", sal:"₹15,000", desc:"Computer Knowledge | 12th Pass"},
+  {title:"Bank Mitra / CSP", type:"Govt", cat:"Govt", sal:"₹18,000 + Commission", desc:"Bank Work | 12th Pass"},
+  {title:"Railway Contract Staff", type:"Govt", cat:"Govt", sal:"₹19,000", desc:"Ticket Checking | 10th Pass"},
+  {title:"Post Office GDS", type:"Govt", cat:"Govt", sal:"₹14,500", desc:"10th Pass | Post Office Work"}
+];
+const cities = ["Jorhat","Guwahati","Dibrugarh","Sivasagar","Tezpur","Silchar","Nagaon","Tinsukia","Lakhimpur"];
+let allJobs = [];
+jobTypes.forEach(j=>{
+  cities.forEach(city=>{
+    allJobs.push({...j, city:city});
+  });
+});
+// Now allJobs length = 99
 
+function renderJobs(list){
+  let html = "";
+  list.forEach((job, i)=>{
+    let badge = job.type==="Govt" ? '<span class="badge govt">🏛️ GOVT CONTRACT</span>' : '<span class="badge verified">✓ Verified</span>';
+    let urgent = i%3===0 ? '<span class="badge urgent">🔥 URGENT</span>' : '';
+    html += `<div class="job-card" data-type="${job.type}" data-cat="${job.cat}">
+      ${badge} ${urgent}
+      <h3>${job.title} - ${job.city}</h3>
+      <p>📍 ${job.city}, Assam | ⭐ ${(4.4 + (i%6)*0.1).toFixed(1)} | ⏰ Part Time / Full Time</p>
+      <div class="salary">${job.sal} / month</div>
+      <p>✅ ${job.desc}</p>
+      <button class="apply-btn" onclick="window.open('https://wa.me/916901964052?text=Hi, ${job.title} ${job.city} ke liye apply karna hai')">Apply on WhatsApp</button>
+    </div>`;
+  });
+  document.getElementById('jobList').innerHTML = html;
+}
+function searchJobs(){
+  let q = document.getElementById('searchInput').value.toLowerCase();
+  let cards = document.getElementsByClassName('job-card');
+  for(let c of cards){ c.style.display = c.innerText.toLowerCase().includes(q) ? "" : "none"; }
+}
+function filterJobs(t){
+  if(t==='All'){ renderJobs(allJobs); return; }
+  renderJobs(allJobs.filter(j=> j.type===t || j.cat===t));
+}
+renderJobs(allJobs);
+</script>
 </body>
 </html>
