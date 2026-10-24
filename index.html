@@ -21,6 +21,7 @@ header p{margin-top:5px;opacity:.9}
 .job p{font-size:14px;color:#666;margin:6px 0}
 .job .meta{display:flex;gap:15px;font-size:13px;margin-top:10px}
 .apply{float:right;background:#1a237e;color:#fff;padding:8px 18px;border-radius:6px;text-decoration:none;font-size:14px}
+.badge{background:#e23744;color:#fff;font-size:11px;padding:3px 8px;border-radius:4px;margin-left:8px;vertical-align:middle}
 footer{text-align:center;padding:20px;color:#888;font-size:13px}
 </style>
 </head>
@@ -32,7 +33,7 @@ footer{text-align:center;padding:20px;color:#888;font-size:13px}
 <p style="font-size:16px; margin-top:5px;">Assam ki <b style="color:#ffca28;">No.1 Job Website</b><br>Govt aur Private Jobs - Ek Jagah Par</p>
 
 <div class="search">
-<input type="text" id="searchInput" placeholder="Search jobs... e.g. Telecalling, Sales">
+<input type="text" id="searchInput" placeholder="Search jobs... e.g. Telecalling, Sales, Zomato">
 <button onclick="searchJobs()">Search</button>
 </div>
 
@@ -41,6 +42,14 @@ footer{text-align:center;padding:20px;color:#888;font-size:13px}
 </div>
 
 <div class="jobs" id="jobList">
+<div class="job" style="border:2px solid #e23744;">
+<a class="apply" href="#" style="background:#e23744;">Apply</a>
+<h3>Zomato Delivery Partner - EV Rent <span class="badge">NEW</span></h3>
+<p>Company: Zomato | Salary: ₹15,000 - ₹25,000 + Incentive</p>
+<p>Join Zomato without DL! Only Aadhaar required for EV Rent. Daily payout, flexible timing. Best for students & freshers in Assam.</p>
+<div class="meta"><span>📍 Guwahati, Assam</span><span>🕒 Full Time / Part Time</span><span>🎓 18+ Age, Aadhaar Only</span></div>
+</div>
+
 <div class="job">
 <a class="apply" href="#">Apply</a>
 <h3>Telecalling Executive - Guwahati</h3>
