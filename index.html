@@ -1,60 +1,132 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="hi">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>JobMitra - All Assam Jobs</title>
+<title>JobMitra Assam - 100% Free Jobs</title>
 <style>
-body{font-family:Arial,sans-serif;background:#f5f5f5;margin:0;padding:0}
-.header{background:#1a73e8;color:white;padding:20px;text-align:center}
-.container{padding:15px;max-width:600px;margin:auto}
-.job-card{background:white;padding:15px;border-radius:12px;margin-bottom:15px;box-shadow:0 2px 8px rgba(0,0,0,0.1)}
-.job-card h3{margin:0}
-.apply-btn{display:block;text-align:center;padding:12px;border-radius:8px;color:white;text-decoration:none;font-weight:bold;margin-top:10px}
-.location-bar{background:white;padding:10px;text-align:center;font-size:13px;color:#333;border-radius:8px;margin-bottom:15px}
+body{font-family:Arial,sans-serif;margin:0;background:#f8f9fa;color:#222}
+.header{background:#0f172a;color:#fff;padding:15px;text-align:center;position:sticky;top:0;z-index:10}
+.header h1{margin:0;font-size:24px}
+.header p{margin:2px;font-size:13px;color:#94a3b8}
+.banner{background:#22c55e;color:#fff;text-align:center;padding:10px;font-weight:bold;font-size:14px}
+.filter{background:#fff;padding:12px;text-align:center;box-shadow:0 1px 5px rgba(0,0,0,0.1)}
+.filter button{padding:8px 14px;margin:3px;border:1px solid #ddd;border-radius:20px;background:#fff;cursor:pointer}
+.filter button.active{background:#0f172a;color:#fff}
+.jobs{padding:12px;display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:12px}
+.card{background:#fff;border-radius:12px;padding:15px;box-shadow:0 2px 8px rgba(0,0,0,0.08);border-left:4px solid #22c55e}
+.card h3{margin:5px 0}
+.badge{font-size:11px;background:#dcfce7;color:#166534;padding:3px 8px;border-radius:10px}
+.salary{font-size:18px;font-weight:bold;color:#0f172a}
+.btn{display:block;background:#25D366;color:#fff;text-align:center;padding:11px;border-radius:8px;text-decoration:none;font-weight:bold;margin-top:10px}
+.how{background:#fff;padding:20px;margin:12px;border-radius:12px}
+.how h2{text-align:center}
+.step{margin:12px 0;display:flex;gap:10px}
+.footer{background:#0f172a;color:#cbd5e1;padding:20px;text-align:center;font-size:13px;line-height:1.7}
+.footer a{color:#fff;text-decoration:none}
 </style>
 </head>
 <body>
-<div class="header"><h1>JobMitra Assam</h1><p>All Assam Jobs - Trusted & Verified</p></div>
-<div class="container">
-<div class="location-bar">📍 Jorhat • Guwahati • Dibrugarh • Tezpur • Silchar • Nagaon • Tinsukia • Sivasagar • Dhemaji • Lakhimpur • Nalbari • Barpeta • Goalpara • Bongaigaon</div>
 
-<!-- 1 ZOMATO -->
-<div class="job-card"><h3>🍔 Zomato Delivery Partner</h3><p>📍 All Assam | 💰 ₹25,000-₹30,000/month</p><a class="apply-btn" style="background:#e23744" href="https://wa.me/916901964052?text=Hi%20JobMitra!%20Zomato%20Job%20chahiye">Apply on WhatsApp</a></div>
+<div class="header">
+<h1>🚀 JobMitra Assam</h1>
+<p>Assam ka No.1 Free Job Portal</p>
+</div>
 
-<!-- 2 SWIGGY -->
-<div class="job-card"><h3>🛵 Swiggy Delivery Partner</h3><p>📍 All Assam | 💰 ₹25,000-₹30,000/month</p><a class="apply-btn" style="background:#fc8019" href="https://wa.me/916901964052?text=Hi%20JobMitra!%20Swiggy%20Job%20chahiye">Apply on WhatsApp</a></div>
+<div class="banner">✅ 100% FREE - Koi Fee Nahi | Direct HR se Baat | ₹25,000 tak Salary</div>
 
-<!-- 3 FLIPKART -->
-<div class="job-card"><h3>📦 Flipkart Delivery Boy</h3><p>📍 All Assam | 💰 ₹18,000-₹22,000/month</p><a class="apply-btn" style="background:#2874f0" href="https://wa.me/916901964052?text=Hi%20JobMitra!%20Flipkart%20Job%20chahiye">Apply on WhatsApp</a></div>
+<div class="filter">
+<button class="active" onclick="filterJobs('All',this)">All Jobs</button>
+<button onclick="filterJobs('Jorhat',this)">Jorhat</button>
+<button onclick="filterJobs('Guwahati',this)">Guwahati</button>
+<button onclick="filterJobs('Dibrugarh',this)">Dibrugarh</button>
+<button onclick="filterJobs('Sivasagar',this)">Sivasagar</button>
+</div>
 
-<!-- 4 BLINKIT -->
-<div class="job-card"><h3>⚡ Blinkit Store Boy</h3><p>📍 Guwahati, Jorhat, Dibrugarh | 💰 ₹15,000-₹18,000/month</p><a class="apply-btn" style="background:#f8cb46;color:black" href="https://wa.me/916901964052?text=Hi%20JobMitra!%20Blinkit%20Job%20chahiye">Apply on WhatsApp</a></div>
+<div class="jobs" id="jobList">
 
-<!-- 5 AMAZON -->
-<div class="job-card"><h3>📦 Amazon Warehouse</h3><p>📍 All Assam | 💰 ₹16,000-₹20,000/month</p><a class="apply-btn" style="background:#ff9900" href="https://wa.me/916901964052?text=Hi%20JobMitra!%20Amazon%20Job%20chahiye">Apply on WhatsApp</a></div>
+<div class="card" data-loc="Jorhat">
+<span class="badge">✅ Verified</span>
+<h3>Zomato Delivery Partner</h3>
+<p>📍 Jorhat | 🏍️ Bike + DL Required</p>
+<p class="salary">₹25,000 / Month</p>
+<p>⭐ 4.8 | ⏰ Full Time</p>
+<a class="btn" href="https://wa.me/916901964052?text=Hi%20JobMitra!%20Mujhe%20Zomato%20Delivery%20Job%20chahiye%20Jorhat%20me">Apply on WhatsApp →</a>
+</div>
 
-<!-- 6 SECURITY -->
-<div class="job-card"><h3>🛡️ Security Guard</h3><p>📍 All Assam | 💰 ₹12,000-₹15,000/month</p><a class="apply-btn" style="background:#2e7d32" href="https://wa.me/916901964052?text=Hi%20JobMitra!%20Security%20Job%20chahiye">Apply on WhatsApp</a></div>
+<div class="card" data-loc="Guwahati">
+<span class="badge">✅ Verified</span>
+<h3>Swiggy Delivery Partner</h3>
+<p>📍 Guwahati | 🏍️ Bike + DL Required</p>
+<p class="salary">₹22,000 / Month</p>
+<p>⭐ 4.7 | ⏰ Full Time</p>
+<a class="btn" href="https://wa.me/916901964052?text=Hi%20JobMitra!%20Mujhe%20Swiggy%20Job%20chahiye%20Guwahati%20me">Apply on WhatsApp →</a>
+</div>
 
-<!-- 7 ZEPTO -->
-<div class="job-card"><h3>🟣 Zepto Delivery Boy</h3><p>📍 Guwahati, Jorhat | 💰 ₹22,000-₹28,000/month | 10-min Delivery</p><a class="apply-btn" style="background:#6d28d9" href="https://wa.me/916901964052?text=Hi%20JobMitra!%20Zepto%20Job%20chahiye">Apply on WhatsApp</a></div>
+<div class="card" data-loc="Guwahati">
+<span class="badge">✅ Verified</span>
+<h3>Flipkart Warehouse</h3>
+<p>📍 Guwahati | 📦 Packing & Sorting</p>
+<p class="salary">₹18,500 / Month</p>
+<p>⭐ 4.6 | ⏰ Full Time</p>
+<a class="btn" href="https://wa.me/916901964052?text=Hi%20JobMitra!%20Mujhe%20Flipkart%20Warehouse%20Job%20chahiye">Apply on WhatsApp →</a>
+</div>
 
-<!-- 8 RAPIDO -->
-<div class="job-card"><h3>🏍️ Rapido Bike Taxi</h3><p>📍 All Assam | 💰 ₹20,000-₹35,000/month | Daily Payment</p><a class="apply-btn" style="background:#000000" href="https://wa.me/916901964052?text=Hi%20JobMitra!%20Rapido%20Job%20chahiye">Apply on WhatsApp</a></div>
+<div class="card" data-loc="Jorhat">
+<span class="badge">✅ Verified</span>
+<h3>Security Guard</h3>
+<p>📍 Jorhat | 🛡️ 12 Hours Duty</p>
+<p class="salary">₹15,000 / Month</p>
+<p>⭐ 4.5 | ⏰ Full Time</p>
+<a class="btn" href="https://wa.me/916901964052?text=Hi%20JobMitra!%20Mujhe%20Security%20Guard%20Job%20chahiye">Apply on WhatsApp →</a>
+</div>
 
-<!-- 9 HOTEL STAFF -->
-<div class="job-card"><h3>🏨 Hotel / Restaurant Staff</h3><p>📍 All Assam | 💰 ₹10,000-₹16,000/month + Food + Room</p><a class="apply-btn" style="background:#0ea5e9" href="https://wa.me/916901964052?text=Hi%20JobMitra!%20Hotel%20Job%20chahiye">Apply on WhatsApp</a></div>
+<div class="card" data-loc="Dibrugarh">
+<span class="badge">✅ Verified</span>
+<h3>Hotel Staff / Waiter</h3>
+<p>📍 Dibrugarh | 🍽️ Food + Room Free</p>
+<p class="salary">₹14,000 / Month</p>
+<p>⭐ 4.6 | ⏰ Full Time</p>
+<a class="btn" href="https://wa.me/916901964052?text=Hi%20JobMitra!%20Mujhe%20Hotel%20Job%20chahiye">Apply on WhatsApp →</a>
+</div>
 
-<!-- 10 OFFICE BOY -->
-<div class="job-card"><h3>💼 Office Boy / Peon</h3><p>📍 All Assam | 💰 ₹10,000-₹14,000/month</p><a class="apply-btn" style="background:#6366f1" href="https://wa.me/916901964052?text=Hi%20JobMitra!%20Office%20Boy%20Job%20chahiye">Apply on WhatsApp</a></div>
-
-<!-- 11 TELECALLER -->
-<div class="job-card"><h3>📞 Telecaller / Call Center</h3><p>📍 Guwahati, Jorhat | 💰 ₹12,000-₹18,000/month | Work From Home Available</p><a class="apply-btn" style="background:#ec4899" href="https://wa.me/916901964052?text=Hi%20JobMitra!%20Telecaller%20Job%20chahiye">Apply on WhatsApp</a></div>
-
-<!-- 12 DRIVER -->
-<div class="job-card"><h3>🚗 Driver Job - Private & Commercial</h3><p>📍 All Assam | 💰 ₹15,000-₹25,000/month</p><a class="apply-btn" style="background:#111827" href="https://wa.me/916901964052?text=Hi%20JobMitra!%20Driver%20Job%20chahiye">Apply on WhatsApp</a></div>
+<div class="card" data-loc="Sivasagar">
+<span class="badge">✅ Verified</span>
+<h3>Delivery Boy - Amazon</h3>
+<p>📍 Sivasagar | 🏍️ Bike Required</p>
+<p class="salary">₹21,000 / Month</p>
+<p>⭐ 4.7 | ⏰ Full Time</p>
+<a class="btn" href="https://wa.me/916901964052?text=Hi%20JobMitra!%20Mujhe%20Amazon%20Delivery%20Job%20chahiye">Apply on WhatsApp →</a>
+</div>
 
 </div>
+
+<div class="how">
+<h2>How To Apply? (3 Easy Steps)</h2>
+<div class="step"><b>1.</b> Job chuno aur Apply dabao</div>
+<div class="step"><b>2.</b> WhatsApp pe apna Naam, Age, Location bhejo</div>
+<div class="step"><b>3.</b> HR call karega aur 2 din me joining</div>
+<p style="text-align:center;color:#22c55e;font-weight:bold">Koi paisa mat do - Job Bilkul Free Hai</p>
+</div>
+
+<div class="footer">
+<b style="color:#fff;font-size:15px">JobMitra Assam</b><br>
+📞 WhatsApp: 6901964052<br>
+🕐 Timing: 9 AM - 8 PM (Mon-Sun)<br>
+📍 Daporijo, Arunachal Pradesh - Serving Assam<br>
+<a href="#">About Us</a> | <a href="#">Privacy Policy</a> | <a href="#">Contact Us</a><br>
+© 2026 JobMitra. All Rights Reserved.
+</div>
+
+<script>
+function filterJobs(loc,btn){
+document.querySelectorAll('.filter button').forEach(b=>b.classList.remove('active'));
+btn.classList.add('active');
+document.querySelectorAll('.card').forEach(c=>{
+if(loc=='All' || c.dataset.loc==loc) c.style.display='block';
+else c.style.display='none';
+});
+}
+</script>
 </body>
 </html>
