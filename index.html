@@ -1,5 +1,3 @@
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -24,7 +22,6 @@ body { background:#f5f5f5; }
 .salary { color:#16a34a; font-size:20px; font-weight:bold; margin:8px 0; }
 .apply-btn { background:#25D366; color:white; width:100%; padding:12px; border:none; border-radius:8px; font-size:16px; font-weight:bold; cursor:pointer; margin-top:10px; }
 .trust { background:white; margin:10px; padding:15px; border-radius:12px; text-align:center; }
-.trust h3 { margin-bottom:10px; }
 </style>
 </head>
 <body>
@@ -35,6 +32,11 @@ body { background:#f5f5f5; }
 </div>
 
 <div class="banner">🎉 100% FREE - Koi Fees Nahi! | 500+ Ladko Ko Job Mili</div>
+
+<!-- SEARCH BAR -->
+<div style="padding:10px; text-align:center;">
+<input type="text" id="searchInput" onkeyup="searchJobs()" placeholder="🔍 Apna Sheher Dhundo... Jorhat, Guwahati..." style="width:95%; padding:12px; border:2px solid #16a34a; border-radius:25px; font-size:15px; outline:none;">
+</div>
 
 <div class="filters">
 <button class="active">All Jobs</button>
@@ -48,7 +50,6 @@ body { background:#f5f5f5; }
 <button>₹10k-15k</button>
 <button>₹15k-25k</button>
 <button>₹25k+</button>
-</button>
 </div>
 
 <h2 class="section-title">🔥 Aaj Ki Nayi Jobs</h2>
@@ -74,7 +75,7 @@ body { background:#f5f5f5; }
 <div class="job-card">
 <span class="badge verified">✓ Verified</span> <span class="badge urgent">🔥 URGENT</span>
 <h3>Hotel Staff - Dibrugarh</h3>
-<p>📍 Dibrugarh | ⭐ 4.6 | ⏰ Full Time</p>
+<p>📍 Dibrugarh | ⭐ 4.6 | ⏰ Part Time / Full Time</p>
 <div class="salary">₹14,000 / month + Food</div>
 <p>✅ Rahna + Khana Free</p>
 <button class="apply-btn" onclick="window.open('https://wa.me/916901964052?text=Hi, Hotel Job Dibrugarh')">Apply on WhatsApp</button>
@@ -88,6 +89,21 @@ body { background:#f5f5f5; }
 </div>
 
 <p style="text-align:center; padding:20px; color:#666; font-size:13px;">© 2026 JobMitra Assam | Made in Assam</p>
+
+<script>
+function searchJobs() {
+  var input = document.getElementById('searchInput').value.toLowerCase();
+  var cards = document.getElementsByClassName('job-card');
+  for (var i = 0; i < cards.length; i++) {
+    var text = cards[i].innerText.toLowerCase();
+    if (text.includes(input)) {
+      cards[i].style.display = "";
+    } else {
+      cards[i].style.display = "none";
+    }
+  }
+}
+</script>
 
 </body>
 </html>
