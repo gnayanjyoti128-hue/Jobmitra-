@@ -3,31 +3,143 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Refer & Earn - JobMitra</title>
+<title>JobMitra Assam - 99 Free Jobs</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif}
-body{background:#f0f2f5;padding:15px}
-.box{max-width:500px;margin:auto;background:#fff;padding:20px;border-radius:15px;box-shadow:0 2px 10px rgba(0,0,0,0.1)}
-h2{text-align:center;color:#1a73e8;margin-bottom:10px}
-p{font-size:14px;text-align:center;color:#555;margin-bottom:15px}
-input{width:100%;padding:12px;border:1px solid #ddd;border-radius:8px;margin-bottom:12px;font-size:16px;outline:none}
-.btn{width:100%;padding:13px;border:none;border-radius:8px;font-size:16px;font-weight:bold;cursor:pointer;color:#fff;background:#1a73e8}
-#result{display:none;margin-top:20px;background:#e8f0fe;padding:15px;border-radius:10px}
-#linkBox{width:100%;padding:10px;border:1px dashed #1a73e8;background:#fff;border-radius:8px;word-break:break-all;font-size:14px;margin:10px 0}
-.share-btn{width:100%;padding:12px;border:none;border-radius:8px;font-size:15px;font-weight:bold;cursor:pointer;margin-top:8px;color:#fff}
-.wa{background:#25D366}.tg{background:#229ED9}.ig{background:#E1306C}.cp{background:#333}
+body{background:#f2f2f2;padding-bottom:80px}
+.header{background:linear-gradient(135deg,#0d47a1,#1976d2);color:#fff;padding:20px 15px;text-align:center}
+.header h1{font-size:24px}
+.header p{font-size:13px;opacity:.9;margin-top:5px}
+.search-box{padding:12px;background:#fff;box-shadow:0 2px 5px rgba(0,0,0,.1)}
+.search-box input{width:100%;padding:12px;border:1px solid #ddd;border-radius:25px;outline:none;font-size:15px}
+.refer-box{background:#e8f5e9;border:2px dashed #28a745;padding:15px;border-radius:12px;margin:15px;text-align:center}
+.cat{padding:10px 15px 5px;font-weight:bold;font-size:16px}
+.jobs{padding:0 12px}
+.job{background:#fff;padding:14px;border-radius:10px;margin-bottom:10px;box-shadow:0 1px 3px rgba(0,0,0,.1);display:flex;justify-content:space-between;align-items:center}
+.job b{font-size:15px}
+.job small{color:#666;display:block;margin-top:3px;font-size:12px}
+.job span{color:#28a745;font-weight:bold;font-size:13px}
+.btn{background:#25D366;color:#fff;padding:9px 14px;border:none;border-radius:20px;font-weight:bold;font-size:13px;cursor:pointer;text-decoration:none}
+.bottom{position:fixed;bottom:0;left:0;right:0;background:#fff;display:flex;justify-content:space-around;padding:10px;box-shadow:0 -2px 10px rgba(0,0,0,.1)}
+.bottom a{text-decoration:none;color:#333;font-size:13px;text-align:center}
+.admin{background:#fff;margin:15px;padding:15px;border-radius:12px;display:none}
+.admin input{padding:8px;width:70px;border:1px solid #ddd;border-radius:5px}
 </style>
 </head>
 <body>
-<div class="box">
-<h2>🔥 Refer & Earn ₹50</h2>
-<p>Apna naam likho aur link banao. Dost join karega to tumhe ₹50 milega.</p>
-<input type="text" id="name" placeholder="Apna Naam Likho">
-<button class="btn" onclick="makeLink()">Mera Refer Link Banao</button>
 
-<div id="result">
-<p style="color:#000;font-weight:bold">Tumhara Link Taiyar Hai 👇</p>
-<div id="linkBox"></div>
-<button class="share-btn wa" onclick="shareWA()">📱 WhatsApp Par Bhejo</button>
-<button class="share-btn tg" onclick="shareTG()">✈️ Telegram Par Bhejo</button>
-<button class="share-btn ig" onclick="shareIG()">📸
+<div class="header">
+<h1>💼 JobMitra Assam</h1>
+<p>99 Verified Free Jobs - No Fees | Assam & Guwahati</p>
+</div>
+
+<div class="search-box"><input type="text" id="search" placeholder="🔍 Job search karo... Driver, Peon, Data Entry..." onkeyup="filterJobs()"></div>
+
+<div class="refer-box">
+<div style="font-size:22px;font-weight:bold">🎁 Refer & Earn</div>
+<p style="margin:6px 0;font-weight:bold">Refer Karke 200 Tak Kama Sakte Hai</p>
+<p style="font-size:13px">Your Code: <b id="myCode">...</b></p>
+<p style="font-size:13px">Total Refer: <b id="myCount">0</b> | Earned: <b id="myEarn">₹0</b> | Pending: <b id="myPend">₹0</b></p>
+<a href="refer.html" style="display:block;background:#25D366;color:#fff;padding:12px;border-radius:25px;width:100%;font-weight:bold;margin-top:8px;text-decoration:none">📲 Refer Karke Kamao - Click Here</a>
+<p style="font-size:11px;margin-top:6px;color:#666">Job lagne ke baad refer wale ko 200 ke andar paisa milega - jitna admin dega</p>
+</div>
+
+<div class="cat">🔥 Latest 99 Jobs</div>
+<div class="jobs" id="jobList"></div>
+
+<div class="admin" id="adminPanel">
+<h3>👑 Admin Panel - Refer Approve</h3>
+<p style="font-size:12px">Jo banda job lag gaya, uska refer code yaha daal ke amount de</p>
+<div id="refList" style="margin-top:10px"></div>
+</div>
+<button onclick="showAdmin()" style="margin:10px;background:none;border:none;color:#999;font-size:11px">Admin Login</button>
+
+<div class="bottom">
+<a href="index.html">🏠<br>Home</a>
+<a href="refer.html">🎁<br>Refer</a>
+<a href="https://wa.me/916000000000">💬<br>Help</a>
+</div>
+
+<script>
+let allJobs = [];
+let cats = ["Guwahati","Dibrugarh","Jorhat","Silchar","Tezpur","Nagaon","Tinsukia","Bongaigaon"];
+let titles = [
+["Delivery Boy - Flipkart","₹15,000 - ₹18,000","Flipkart"],
+["Peon - School","₹9,000 - ₹12,000","Private School"],
+["Data Entry Operator","₹12,000 - ₹15,000","Office"],
+["Security Guard","₹11,000 - ₹14,000","Agency"],
+["Driver - Bolero","₹14,000 - ₹17,000","Private"],
+["Helper - Warehouse","₹10,000 - ₹13,000","Warehouse"],
+["Sales Boy - Mobile Shop","₹10,000 - ₹14,000","Shop"],
+["Cook - Hotel","₹12,000 - ₹16,000","Hotel"],
+["Electrician Helper","₹11,000 - ₹15,000","Company"],
+["Office Boy","₹9,500 - ₹12,500","Office"]
+];
+for(let i=1;i<=99;i++){
+  let t = titles[i % titles.length];
+  let city = cats[i % cats.length];
+  allJobs.push({title: t[0], salary: t[1], loc: t[2] + " - " + city});
+}
+function render(list){
+  document.getElementById('jobList').innerHTML = list.map((j,i)=>`
+  <div class="job">
+    <div><b>${j.title} ${i+1}</b><small>${j.loc}</small><span>${j.salary} / Month</span></div>
+    <a class="btn" href="javascript:applyJob('${j.title}')">Apply</a>
+  </div>`).join('');
+}
+render(allJobs);
+function filterJobs(){
+  let q = document.getElementById('search').value.toLowerCase();
+  render(allJobs.filter(j=> j.title.toLowerCase().includes(q) || j.loc.toLowerCase().includes(q)));
+}
+function applyJob(title){
+  let myCode = localStorage.getItem('myReferCode')||'';
+  let joinedVia = localStorage.getItem('joinedVia')||'DIRECT';
+  let msg = 'Hi JobMitra, Mujhe '+title+' job chahiye. Mera Code: '+myCode+' | Refer By: '+joinedVia;
+  window.open('https://wa.me/916000000000?text='+encodeURIComponent(msg),'_blank');
+  if(joinedVia!=='DIRECT' && joinedVia!==myCode){
+    let refs = JSON.parse(localStorage.getItem('allRefs')||'[]');
+    refs.push({referrer:joinedVia, job:title, date:new Date().toLocaleDateString(), amount:0, status:'Pending'});
+    localStorage.setItem('allRefs', JSON.stringify(refs));
+    updateMyStats();
+  }
+}
+let urlParams = new URLSearchParams(window.location.search);
+let ref = urlParams.get('ref');
+if(ref){ localStorage.setItem('joinedVia', ref); }
+let myCode = localStorage.getItem('myReferCode');
+if(!myCode){ myCode = 'JM' + Math.floor(1000 + Math.random()*9000); localStorage.setItem('myReferCode', myCode); }
+document.getElementById('myCode').innerText = myCode;
+function updateMyStats(){
+  let refs = JSON.parse(localStorage.getItem('allRefs')||'[]');
+  let mine = refs.filter(r=> r.referrer===myCode);
+  let earn = mine.filter(r=>r.status==='Approved').reduce((s,r)=>s+parseInt(r.amount||0),0);
+  let pend = mine.filter(r=>r.status==='Pending').length;
+  document.getElementById('myCount').innerText = mine.length;
+  document.getElementById('myEarn').innerText = '₹'+earn;
+  document.getElementById('myPend').innerText = pend;
+  let html = refs.map((r,i)=>`<div style="border:1px solid #eee;padding:8px;border-radius:8px;margin-bottom:6px;font-size:13px">Referrer: <b>${r.referrer}</b> | Job: ${r.job} | Status: ${r.status} | Amount: ₹${r.amount}<br><input id="amt${i}" type="number" max="200" placeholder="0-200"> <button onclick="approveRef(${i})">Approve ₹</button></div>`).join('') || 'Koi refer nahi aaya abhi';
+  document.getElementById('refList').innerHTML = html;
+}
+updateMyStats();
+function approveRef(i){
+  let refs = JSON.parse(localStorage.getItem('allRefs')||'[]');
+  let amt = document.getElementById('amt'+i).value;
+  if(!amt || amt>200){ alert('200 se jyada nahi de sakte'); return; }
+  refs[i].amount = amt; refs[i].status='Approved';
+  localStorage.setItem('allRefs', JSON.stringify(refs));
+  updateMyStats();
+  alert('Approved ₹'+amt+' for '+refs[i].referrer);
+}
+function showAdmin(){
+  let pass = prompt('Admin Password?');
+  if(pass==='jobmitra123'){ document.getElementById('adminPanel').style.display='block'; updateMyStats(); } else { alert('Wrong Password'); }
+}
+function shareRefer(){
+  let link = 'https://gnayanjyoti128.github.io/Jobmitra-/?ref=' + myCode;
+  let msg = 'JobMitra Assam pe 99 FREE Jobs hai, Refer karke 200 tak kama sakte hai: ' + link;
+  window.open('https://wa.me/?text='+encodeURIComponent(msg),'_blank');
+}
+</script>
+</body>
+</html>
