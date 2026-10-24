@@ -10,7 +10,8 @@ body { background:#f5f5f5; }
 .header { background:#16a34a; color:white; padding:15px; text-align:center; }
 .banner { background:#dcfce7; padding:12px; text-align:center; font-weight:bold; color:#166534; border:2px dashed #16a34a; margin:10px; border-radius:10px; }
 .filters { display:flex; flex-wrap:wrap; gap:8px; justify-content:center; padding:10px; }
-.filters button { padding:8px 14px; border:1px solid #16a34a; background:white; color:#16a34a; border-radius:20px; cursor:pointer; font-weight:bold; }
+.filters button { padding:10px 16px; border:1px solid #16a34a; background:white; color:#16a34a; border-radius:20px; cursor:pointer; font-weight:bold; font-size:14px; }
+.filters button.active { background:#16a34a; color:white; }
 .job-card { background:white; margin:10px; padding:15px; border-radius:12px; box-shadow:0 2px 8px rgba(0,0,0,0.1); }
 .badge { display:inline-block; padding:3px 8px; border-radius:5px; font-size:12px; font-weight:bold; }
 .verified { background:#dbeafe; color:#1d4ed8; }
@@ -26,66 +27,63 @@ body { background:#f5f5f5; }
 <div class="banner">🎉 100% FREE - Koi Fees Nahi! | 99 Jobs Live Now</div>
 
 <div style="padding:10px; text-align:center;">
-<input type="text" id="searchInput" onkeyup="searchJobs()" placeholder="🔍 Search... Jorhat, Guwahati, Govt, Bank, Delivery..." style="width:95%; padding:12px; border:2px solid #16a34a; border-radius:25px; font-size:15px; outline:none;">
+<input type="text" id="searchInput" placeholder="🔍 Search... Jorhat, Guwahati, Govt, Bank..." style="width:95%; padding:12px; border:2px solid #16a34a; border-radius:25px; font-size:15px; outline:none;">
 </div>
 
-<div class="filters"><button onclick="filterJobs('All')">All 99 Jobs</button><button onclick="filterJobs('Private')">Private</button><button onclick="filterJobs('Govt')">Govt Contract</button><button onclick="filterJobs('Delivery')">Delivery</button></div>
+<div class="filters">
+<button id="btnAll" class="active">All 99 Jobs</button>
+<button id="btnPrivate">Private</button>
+<button id="btnGovt">Govt Contract</button>
+<button id="btnDelivery">Delivery</button>
+</div>
 
-<h2 style="padding:15px 10px 5px;">🔥 Total 99 Jobs - Private & Govt</h2>
+<h2 style="padding:15px 10px 5px;">🔥 Total <span id="count">99</span> Jobs - Part Time Only</h2>
 <div id="jobList"></div>
-
-<p style="text-align:center; padding:20px; color:#666; font-size:13px;">© 2026 JobMitra Assam | 99 Jobs</p>
+<p style="text-align:center; padding:20px; color:#666; font-size:13px;">© 2026 JobMitra Assam</p>
 
 <script>
-// 99 Jobs Data - 11 Job Types x 9 Cities = 99
 const jobTypes = [
   {title:"Zomato Delivery Partner", type:"Private", cat:"Delivery", sal:"₹25,000", desc:"Bike + License | Daily Payment"},
   {title:"Swiggy Delivery Boy", type:"Private", cat:"Delivery", sal:"₹22,000", desc:"Flexible Timing | Fuel Allowance"},
-  {title:"Flipkart Warehouse Helper", type:"Private", cat:"Private", sal:"₹16,500", desc:"Packing / Sorting | 8 Hr Duty"},
+  {title:"Flipkart Warehouse Helper", type:"Private", cat:"Private", sal:"₹16,500", desc:"Packing / Sorting"},
   {title:"Hotel Staff", type:"Private", cat:"Private", sal:"₹14,000 + Food", desc:"Rahna + Khana Free"},
-  {title:"Security Guard", type:"Private", cat:"Private", sal:"₹13,000", desc:"Uniform Free | 12 Hr Duty"},
-  {title:"Shop Helper", type:"Private", cat:"Private", sal:"₹11,000", desc:"No Experience | Part Time / Full Time"},
-  {title:"Anganwadi Helper", type:"Govt", cat:"Govt", sal:"₹10,000", desc:"10th Pass | Mahila Ke Liye | Govt Scheme"},
+  {title:"Security Guard", type:"Private", cat:"Private", sal:"₹13,000", desc:"Uniform Free"},
+  {title:"Shop Helper", type:"Private", cat:"Private", sal:"₹11,000", desc:"No Experience"},
+  {title:"Anganwadi Helper", type:"Govt", cat:"Govt", sal:"₹10,000", desc:"10th Pass | Govt Scheme"},
   {title:"Panchayat Data Entry Operator", type:"Govt", cat:"Govt", sal:"₹15,000", desc:"Computer Knowledge | 12th Pass"},
-  {title:"Bank Mitra / CSP", type:"Govt", cat:"Govt", sal:"₹18,000 + Commission", desc:"Bank Work | 12th Pass"},
+  {title:"Bank Mitra / CSP", type:"Govt", cat:"Govt", sal:"₹18,000 + Commission", desc:"Bank Work"},
   {title:"Railway Contract Staff", type:"Govt", cat:"Govt", sal:"₹19,000", desc:"Ticket Checking | 10th Pass"},
   {title:"Post Office GDS", type:"Govt", cat:"Govt", sal:"₹14,500", desc:"10th Pass | Post Office Work"}
 ];
 const cities = ["Jorhat","Guwahati","Dibrugarh","Sivasagar","Tezpur","Silchar","Nagaon","Tinsukia","Lakhimpur"];
 let allJobs = [];
-jobTypes.forEach(j=>{
-  cities.forEach(city=>{
-    allJobs.push({...j, city:city});
-  });
-});
-// Now allJobs length = 99
+jobTypes.forEach(j=>{ cities.forEach(c=>{ allJobs.push({...j, city:c}); }); });
+let currentFilter = 'All';
+let currentSearch = '';
 
-function renderJobs(list){
-  let html = "";
-  list.forEach((job, i)=>{
+function showJobs(){
+  let list = allJobs.filter(j=>{
+    if(currentFilter==='All') return true;
+    return j.type===currentFilter || j.cat===currentFilter;
+  });
+  if(currentSearch) list = list.filter(j => (j.title+" "+j.city+" "+j.type+" "+j.cat).toLowerCase().includes(currentSearch));
+  document.getElementById('count').textContent = list.length;
+  document.getElementById('jobList').innerHTML = list.map((job,i)=>{
     let badge = job.type==="Govt" ? '<span class="badge govt">🏛️ GOVT CONTRACT</span>' : '<span class="badge verified">✓ Verified</span>';
     let urgent = i%3===0 ? '<span class="badge urgent">🔥 URGENT</span>' : '';
-    html += `<div class="job-card" data-type="${job.type}" data-cat="${job.cat}">
-      ${badge} ${urgent}
-      <h3>${job.title} - ${job.city}</h3>
-      <p>📍 ${job.city}, Assam | ⭐ ${(4.4 + (i%6)*0.1).toFixed(1)} | ⏰ Part Time / Full Time</p>
-      <div class="salary">${job.sal} / month</div>
-      <p>✅ ${job.desc}</p>
-      <button class="apply-btn" onclick="window.open('https://wa.me/916901964052?text=Hi, ${job.title} ${job.city} ke liye apply karna hai')">Apply on WhatsApp</button>
-    </div>`;
-  });
-  document.getElementById('jobList').innerHTML = html;
+    return `<div class="job-card">${badge} ${urgent}<h3>${job.title} - ${job.city}</h3><p>📍 ${job.city}, Assam | ⭐ 4.8 | ⏰ Part Time Only</p><div class="salary">${job.sal} / month</div><p>✅ ${job.desc}</p><button class="apply-btn" onclick="window.open('https://wa.me/916901964052?text=Hi ${job.title} ${job.city} part time')">Apply on WhatsApp</button></div>`;
+  }).join('');
 }
-function searchJobs(){
-  let q = document.getElementById('searchInput').value.toLowerCase();
-  let cards = document.getElementsByClassName('job-card');
-  for(let c of cards){ c.style.display = c.innerText.toLowerCase().includes(q) ? "" : "none"; }
+function setActive(id){
+  document.querySelectorAll('.filters button').forEach(b=>b.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
 }
-function filterJobs(t){
-  if(t==='All'){ renderJobs(allJobs); return; }
-  renderJobs(allJobs.filter(j=> j.type===t || j.cat===t));
-}
-renderJobs(allJobs);
+document.getElementById('btnAll').onclick = function(){ currentFilter='All'; setActive('btnAll'); showJobs(); };
+document.getElementById('btnPrivate').onclick = function(){ currentFilter='Private'; setActive('btnPrivate'); showJobs(); };
+document.getElementById('btnGovt').onclick = function(){ currentFilter='Govt'; setActive('btnGovt'); showJobs(); };
+document.getElementById('btnDelivery').onclick = function(){ currentFilter='Delivery'; setActive('btnDelivery'); showJobs(); };
+document.getElementById('searchInput').oninput = function(){ currentSearch = this.value.toLowerCase(); showJobs(); };
+showJobs();
 </script>
 </body>
 </html>
