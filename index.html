@@ -22,6 +22,8 @@ body{background:#f2f2f2;padding-bottom:80px}
 .btn{background:#25D366;color:#fff;padding:9px 14px;border:none;border-radius:20px;font-weight:bold;font-size:13px;cursor:pointer;text-decoration:none}
 .bottom{position:fixed;bottom:0;left:0;right:0;background:#fff;display:flex;justify-content:space-around;padding:10px;box-shadow:0 -2px 10px rgba(0,0,0,.1)}
 .bottom a{text-decoration:none;color:#333;font-size:13px;text-align:center}
+.admin{background:#fff;margin:15px;padding:15px;border-radius:12px;display:none}
+.admin input{padding:8px;width:70px;border:1px solid #ddd;border-radius:5px}
 </style>
 </head>
 <body>
@@ -36,17 +38,26 @@ body{background:#f2f2f2;padding-bottom:80px}
 <div class="refer-box">
 <div style="font-size:22px;font-weight:bold">🎁 Refer & Earn</div>
 <p style="margin:6px 0;font-weight:bold">Refer Karke 200 Tak Kama Sakte Hai</p>
-<p style="font-size:13px">Your Refer Code: <b id="myCode">...</b> | Total: <b id="myCount">0</b></p>
-<button style="background:#25D366;color:#fff;padding:12px;border:none;border-radius:25px;width:100%;font-weight:bold;margin-top:8px" onclick="shareRefer()">📲 WhatsApp Pe Share Karo</button>
+<p style="font-size:13px">Your Code: <b id="myCode">...</b></p>
+<p style="font-size:13px">Total Refer: <b id="myCount">0</b> | Earned: <b id="myEarn">₹0</b> | Pending: <b id="myPend">₹0</b></p>
+<a href="refer.html" style="display:block;background:#25D366;color:#fff;padding:12px;border-radius:25px;width:100%;font-weight:bold;margin-top:8px;text-decoration:none">📲 Refer Karke Kamao - Click Here</a>
+<p style="font-size:11px;margin-top:6px;color:#666">Job lagne ke baad refer wale ko 200 ke andar paisa milega - jitna admin dega</p>
 </div>
 
 <div class="cat">🔥 Latest 99 Jobs</div>
 <div class="jobs" id="jobList"></div>
 
+<div class="admin" id="adminPanel">
+<h3>👑 Admin Panel - Refer Approve</h3>
+<p style="font-size:12px">Jo banda job lag gaya, uska refer code yaha daal ke amount de</p>
+<div id="refList" style="margin-top:10px"></div>
+</div>
+<button onclick="showAdmin()" style="margin:10px;background:none;border:none;color:#999;font-size:11px">Admin Login</button>
+
 <div class="bottom">
-<a href="#">🏠<br>Home</a>
-<a href="#" onclick="shareRefer()">🎁<br>Refer</a>
-<a href="https://wa.me/916000000000">💬<br>Help</a>
+<a href="index.html">🏠<br>Home</a>
+<a href="refer.html">🎁<br>Refer</a>
+<a href="https://wa.me/916901964052">💬<br>Help</a>
 </div>
 
 <script>
@@ -73,7 +84,7 @@ function render(list){
   document.getElementById('jobList').innerHTML = list.map((j,i)=>`
   <div class="job">
     <div><b>${j.title} ${i+1}</b><small>${j.loc}</small><span>${j.salary} / Month</span></div>
-    <a class="btn" href="https://wa.me/916000000000?text=${encodeURIComponent('Hi JobMitra, Mujhe '+j.title+' job chahiye. My Refer: '+ (localStorage.getItem('myReferCode')||''))}">Apply</a>
+    <a class="btn" href="javascript:applyJob('${j.title}')">Apply</a>
   </div>`).join('');
 }
 render(allJobs);
@@ -81,14 +92,49 @@ function filterJobs(){
   let q = document.getElementById('search').value.toLowerCase();
   render(allJobs.filter(j=> j.title.toLowerCase().includes(q) || j.loc.toLowerCase().includes(q)));
 }
+function applyJob(title){
+  let myCode = localStorage.getItem('myReferCode')||'';
+  let joinedVia = localStorage.getItem('joinedVia')||'DIRECT';
+  let msg = 'Hi JobMitra, Mujhe '+title+' job chahiye. Mera Code: '+myCode+' | Refer By: '+joinedVia;
+  window.open('https://wa.me/916901964052?text='+encodeURIComponent(msg),'_blank');
+  if(joinedVia!=='DIRECT' && joinedVia!==myCode){
+    let refs = JSON.parse(localStorage.getItem('allRefs')||'[]');
+    refs.push({referrer:joinedVia, job:title, date:new Date().toLocaleDateString(), amount:0, status:'Pending'});
+    localStorage.setItem('allRefs', JSON.stringify(refs));
+    updateMyStats();
+  }
+}
 let urlParams = new URLSearchParams(window.location.search);
 let ref = urlParams.get('ref');
 if(ref){ localStorage.setItem('joinedVia', ref); }
 let myCode = localStorage.getItem('myReferCode');
 if(!myCode){ myCode = 'JM' + Math.floor(1000 + Math.random()*9000); localStorage.setItem('myReferCode', myCode); }
 document.getElementById('myCode').innerText = myCode;
-let cnt = parseInt(localStorage.getItem('myReferCount')||'0');
-document.getElementById('myCount').innerText = cnt;
+function updateMyStats(){
+  let refs = JSON.parse(localStorage.getItem('allRefs')||'[]');
+  let mine = refs.filter(r=> r.referrer===myCode);
+  let earn = mine.filter(r=>r.status==='Approved').reduce((s,r)=>s+parseInt(r.amount||0),0);
+  let pend = mine.filter(r=>r.status==='Pending').length;
+  document.getElementById('myCount').innerText = mine.length;
+  document.getElementById('myEarn').innerText = '₹'+earn;
+  document.getElementById('myPend').innerText = pend;
+  let html = refs.map((r,i)=>`<div style="border:1px solid #eee;padding:8px;border-radius:8px;margin-bottom:6px;font-size:13px">Referrer: <b>${r.referrer}</b> | Job: ${r.job} | Status: ${r.status} | Amount: ₹${r.amount}<br><input id="amt${i}" type="number" max="200" placeholder="0-200"> <button onclick="approveRef(${i})">Approve ₹</button></div>`).join('') || 'Koi refer nahi aaya abhi';
+  document.getElementById('refList').innerHTML = html;
+}
+updateMyStats();
+function approveRef(i){
+  let refs = JSON.parse(localStorage.getItem('allRefs')||'[]');
+  let amt = document.getElementById('amt'+i).value;
+  if(!amt || amt>200){ alert('200 se jyada nahi de sakte'); return; }
+  refs[i].amount = amt; refs[i].status='Approved';
+  localStorage.setItem('allRefs', JSON.stringify(refs));
+  updateMyStats();
+  alert('Approved ₹'+amt+' for '+refs[i].referrer);
+}
+function showAdmin(){
+  let pass = prompt('Admin Password?');
+  if(pass==='jobmitra123'){ document.getElementById('adminPanel').style.display='block'; updateMyStats(); } else { alert('Wrong Password'); }
+}
 function shareRefer(){
   let link = 'https://gnayanjyoti128.github.io/Jobmitra-/?ref=' + myCode;
   let msg = 'JobMitra Assam pe 99 FREE Jobs hai, Refer karke 200 tak kama sakte hai: ' + link;
